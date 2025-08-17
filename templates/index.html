@@ -1,12 +1,10 @@
+{% extends 'layout.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-{% include 'includes/head.html' %}
-    <body>
-        
-{% include 'includes/navbar.html' %}
-        
-        <!--================Home Banner Area =================-->
+
+
+                        {% block banner_area %}
+
+                                    <!--================Home Banner Area =================-->
         <section class="home_banner_area">
            	<div class="container box_1620">
            		<div class="banner_inner d-flex align-items-center">
@@ -35,10 +33,14 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-            </div>
-        </section>
+
+                        {% endblock %}
+
+
+
+
+{% block content %}
+
         <!--================End Home Banner Area =================-->
         
         <!--================Welcome Area =================-->
@@ -405,11 +407,12 @@
         </section>
         <!--================End Testimonials Area =================-->
 
-      {% include 'includes/footer.html' %}
+					</div>
+				</div>
+            </div>
+        </section>
+{% endblock %}
         
         
         
         
-
-    </body>
-</html>
