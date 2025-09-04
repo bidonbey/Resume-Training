@@ -3,8 +3,8 @@ from core.models import GeneralSetting, ImageSetting, Skill, Experience, Educati
 
 
 # Create your views here.
-
-def index(request):
+def layout(request):
+    documents = Document.objects.all()
     site_title=GeneralSetting.objects.get(name='site_title').parameters
     site_description=GeneralSetting.objects.get(name='site_description').parameters
     site_keywords=GeneralSetting.objects.get(name='site_keywords').parameters
@@ -13,24 +13,15 @@ def index(request):
     home_banner_title=GeneralSetting.objects.get(name='home_banner_title').parameters
     about_myself_welcome=GeneralSetting.objects.get(name='about_myself_welcome').parameters
     about_myself_footer=GeneralSetting.objects.get(name='about_myself_footer').parameters
-
     #Images
     header_logo = ImageSetting.objects.get(name='header_logo').file
     home_banner_image = ImageSetting.objects.get(name='home_banner_image').file
     site_favicon = ImageSetting.objects.get(name='site_favicon').file
-    # Skills
-    skills = Skill.objects.all().order_by('order')
-    #Experiences
-    experiences = Experience.objects.all().order_by('-start_date')
-
-    educations = Education.objects.all().order_by('-start_date')
     #Social Medias
     social_medias = SocialMedia.objects.all()
-    #Documents
-    documents = Document.objects.all()
-
 
     context = {
+        'documents': documents,
         'site_title': site_title,
         'site_description': site_description,
         'site_keywords': site_keywords,
@@ -39,14 +30,31 @@ def index(request):
         'home_banner_title': home_banner_title,
         'about_myself_welcome': about_myself_welcome,
         'about_myself_footer': about_myself_footer,
-        'header_logo':header_logo,
+        'header_logo': header_logo,
         'home_banner_image': home_banner_image,
         'site_favicon': site_favicon,
+        'social_medias': social_medias,
+    }
+    return context
+
+
+def index(request):
+
+    # Skills
+    skills = Skill.objects.all().order_by('order')
+    #Experiences
+    experiences = Experience.objects.all().order_by('-start_date')
+
+    educations = Education.objects.all().order_by('-start_date')
+
+    #Documents
+
+
+
+    context = {
         'skills': skills,
         'experiences': experiences,
         'educations': educations,
-        'social_medias': social_medias,
-        'documents': documents,
     }
 
     return render(request, 'index.html',context=context)
